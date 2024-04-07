@@ -46,7 +46,7 @@ server.post(
     switch (event.type) {
       case "payment_intent.succeeded":
         const paymentIntentSucceeded = event.data.object;
-        const order=await Order.findById(paymentIntentSucceeded.metadata.orderId);
+        const order=await Order.findById(paymentIntentSucceeded.metadata.order_id);
         order.paymentStatus='received';
         await order.save();
 
@@ -174,7 +174,7 @@ const stripe = require("stripe")(process.env.STRIPE_SERVER_KEY);
 
 
 server.post("/create-payment-intent", async (req, res) => {
-  const { totalAmount, orderId } = req.body;
+  const { totalAmount, order_id } = req.body;
 
   // Create a PaymentIntent with the order amount and currency
   const paymentIntent = await stripe.paymentIntents.create({
@@ -185,7 +185,7 @@ server.post("/create-payment-intent", async (req, res) => {
       enabled: true,
     },
     metadata: {
-      orderId,
+      order_id,
     },
   });
 
