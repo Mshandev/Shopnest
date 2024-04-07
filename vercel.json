@@ -1,4 +1,11 @@
 {
+    "functions": {
+        "myFunction": {
+          "maxDuration": 120,
+          "memory": 512,
+          "runtime": "@vercel/nodejs12"
+        }
+      },
     "builds": [
       {
         "src": "index.js",
