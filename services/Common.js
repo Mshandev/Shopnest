@@ -10,6 +10,8 @@ const transporter = nodemailer.createTransport({
     user: "betterhalf876@gmail.com",
     pass: process.env.MAIL_PASSWORD,
   },
+  debug:true,
+  logger:true,
 });
 
 exports.isAuth = (req, res, done) => {
