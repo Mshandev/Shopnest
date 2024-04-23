@@ -30,7 +30,7 @@ const endpointSecret = process.env.ENDPOINT_SECRET;
 server.post(
   "/webhook",
   express.raw({ type: "application/json" }),
-  async(request, response) => {
+  async (request, response) => {
     const sig = request.headers["stripe-signature"];
 
     let event;
@@ -46,8 +46,10 @@ server.post(
     switch (event.type) {
       case "payment_intent.succeeded":
         const paymentIntentSucceeded = event.data.object;
-        const order=await Order.findById(paymentIntentSucceeded.metadata.order_id);
-        order.paymentStatus='received';
+        const order = await Order.findById(
+          paymentIntentSucceeded.metadata.order_id
+        );
+        order.paymentStatus = "received";
         await order.save();
 
         break;
@@ -171,7 +173,6 @@ passport.deserializeUser(function (user, cb) {
 //Payments
 // This is your test secret API key.
 const stripe = require("stripe")(process.env.STRIPE_SERVER_KEY);
-
 
 server.post("/create-payment-intent", async (req, res) => {
   const { totalAmount, order_id } = req.body;
