@@ -76,3 +76,31 @@ exports.updateProduct = async (req, res) => {
     res.status(400).json(err);
   }
 };
+
+exports.fetchProductsBySearch = async (req, res) => {
+  const { searchQuery } = req.query;
+  let condition = {};
+
+  if (searchQuery) {
+    condition = { title: { $regex: searchQuery, $options: 'i' } };
+  }
+
+  let query = Product.find(condition);
+  let totalProductsQuery = Product.find(condition);
+
+  try {
+    const totalDocs = await totalProductsQuery.countDocuments().exec();
+
+    if (req.query._page && req.query._limit) {
+      const pageSize = parseInt(req.query._limit);
+      const page = parseInt(req.query._page);
+      query = query.skip(pageSize * (page - 1)).limit(pageSize);
+    }
+
+    const doc = await query.exec();
+    res.set("X-Total-Count", totalDocs);
+    res.status(200).json(doc);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
