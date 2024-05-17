@@ -13,6 +13,7 @@ const cookieParser = require("cookie-parser");
 const ExtractJwt = require("passport-jwt").ExtractJwt;
 
 const productsRouters = require("./routes/Products");
+const contactRouters = require("./routes/Contacts");
 const categoriesRouters = require("./routes/Categories");
 const brandsRouters = require("./routes/Brands");
 const userRouters = require("./routes/Users");
@@ -97,6 +98,7 @@ server.use("/users", isAuth(), userRouters.router);
 server.use("/auth", authRouters.router);
 server.use("/cart", isAuth(), cartRouters.router);
 server.use("/orders", isAuth(), ordersRouter.router);
+server.use("/contacts", contactRouters.router);
 server.get("*", (req, res) =>
   res.sendFile(path.resolve("build", "index.html"))
 );

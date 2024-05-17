@@ -1,37 +1,28 @@
-const {User}=require("../model/User");
+const {Contact}=require("../model/Contact");
 
-exports.fetchUserById= async(req,res)=>{
-    const {id}=req.user;
+
+exports.createContact= async(req,res)=>{
+
+    const contact=new Contact(req.body);
     try{
-        const user= await User.findById(id,'name email id role addresses').exec();
-        res.status(200).json(user);
+        const doc= await contact.save();
+        res.status(201).json(doc);
     }
     catch(err){
         res.status(400).json(err);
     }
 };
 
-exports.updateUser= async(req,res)=>{
-    const {id}=req.params;
-    try{
-        const user= await User.findByIdAndUpdate(id,req.body,{new:true});
-        res.status(200).json(user);
-    }
-    catch(err){
-        res.status(400).json(err);
-    }
-};
+exports.fetchAllContacts= async(req,res)=>{
 
-exports.fetchAllUsers= async(req,res)=>{
-
-    let query=User.find({});
-    let totalUsersQuery=User.find({});
+    let query=Contact.find({});
+    let totalContactsQuery=Contact.find({});
     
     if(req.query._sort && req.query._order){
         query= query.sort({[req.query._sort]:req.query._order});
     }
 
-    const totalDocs=await totalUsersQuery.count().exec();
+    const totalDocs=await totalContactsQuery.count().exec();
     console.log({totalDocs});
 
     if(req.query._page && req.query._limit){
@@ -50,10 +41,10 @@ exports.fetchAllUsers= async(req,res)=>{
     }
 };
 
-exports.deleteUser = async (req, res) => {
+exports.deleteContact = async (req, res) => {
     const { id } = req.params;
     try {
-      const doc = await User.findByIdAndDelete(id);
+      const doc = await Contact.findByIdAndDelete(id);
       res.status(200).json(doc);
     } catch (err) {
       res.status(400).json(err);

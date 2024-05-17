@@ -2,7 +2,9 @@ const { Product } = require("../model/Product");
 
 exports.createProduct = async (req, res) => {
   const product = new Product(req.body);
-  product.discountedPrice=Math.round(product.price*(1-product.discountPercentage/100));
+  product.discountedPrice = Math.round(
+    product.price * (1 - product.discountPercentage / 100)
+  );
   try {
     const doc = await product.save();
     res.status(201).json(doc);
@@ -13,9 +15,6 @@ exports.createProduct = async (req, res) => {
 
 exports.fetchAllProducts = async (req, res) => {
   let condition = {};
-  // if(!req.params.admin){
-  //     condition.deleted={$ne:true};
-  // }
   let query = Product.find(condition);
   let totalProductsQuery = Product.find(condition);
 
@@ -69,8 +68,10 @@ exports.updateProduct = async (req, res) => {
     const product = await Product.findByIdAndUpdate(id, req.body, {
       new: true,
     });
-    product.discountedPrice=Math.round(product.price*(1-product.discountPercentage/100));
-    const updateProduct= await product.save();
+    product.discountedPrice = Math.round(
+      product.price * (1 - product.discountPercentage / 100)
+    );
+    const updateProduct = await product.save();
     res.status(200).json(updateProduct);
   } catch (err) {
     res.status(400).json(err);
@@ -82,7 +83,7 @@ exports.fetchProductsBySearch = async (req, res) => {
   let condition = {};
 
   if (searchQuery) {
-    condition = { title: { $regex: searchQuery, $options: 'i' } };
+    condition = { title: { $regex: searchQuery, $options: "i" } };
   }
 
   let query = Product.find(condition);
@@ -102,5 +103,19 @@ exports.fetchProductsBySearch = async (req, res) => {
     res.status(200).json(doc);
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+};
+
+exports.fetchFeatureProducts = async (req, res) => {
+  let condition = {};
+
+  if (req.query.category) {
+    condition = { category: { $regex: req.query.category, $options: "i" } };
+  }
+  try {
+    const products = await Product.find(condition).sort({ rating: -1 }).limit(3).exec();
+    res.status(200).json(products);
+  } catch (err) {
+    res.status(400).json(err);
   }
 };

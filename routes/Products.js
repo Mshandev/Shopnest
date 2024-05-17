@@ -5,13 +5,15 @@ const {
   fetchAllProducts,
   fetchProductById,
   updateProduct,
-  fetchProductsBySearch
+  fetchProductsBySearch,
+  fetchFeatureProducts
 } = require("../controller/Product");
 
 router
   .post("/", createProduct)
   .get("/", fetchAllProducts)
   .get("/search", fetchProductsBySearch)
+  .get("/feature", fetchFeatureProducts)
   .get("/:id", fetchProductById)
   .patch("/:id",updateProduct);
 
