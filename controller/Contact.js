@@ -22,7 +22,7 @@ exports.fetchAllContacts= async(req,res)=>{
         query= query.sort({[req.query._sort]:req.query._order});
     }
 
-    const totalDocs=await totalContactsQuery.count().exec();
+    const totalDocs=await totalContactsQuery.countDocuments().exec();
     console.log({totalDocs});
 
     if(req.query._page && req.query._limit){

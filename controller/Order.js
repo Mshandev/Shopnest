@@ -60,7 +60,7 @@ exports.fetchAllOrders= async(req,res)=>{
         query= query.sort({[req.query._sort]:req.query._order});
     }
 
-    const totalDocs=await totalOrdersQuery.count().exec();
+    const totalDocs=await totalOrdersQuery.countDocuments().exec();
     console.log({totalDocs});
 
     if(req.query._page && req.query._limit){

@@ -32,7 +32,7 @@ exports.fetchAllCategories= async(req,res)=>{
         query= query.sort({[req.query._sort]:req.query._order});
     }
 
-    const totalDocs=await totalCategoriesQuery.count().exec();
+    const totalDocs=await totalCategoriesQuery.countDocuments().exec();
     console.log({totalDocs});
 
     if(req.query._page && req.query._limit){
