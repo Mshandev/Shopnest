@@ -38,7 +38,7 @@ This repository hosts the source code for SHOPNEST, smart ecommerce website buil
 
 ![Checkout](https://ibb.co/DzbB57Q)
 
-![Orders](https://ibb.co/Cn4sGMY)
+![Orders](https://i.ibb.co/mHdFWX2/shopnest-orders.png)
 
 ## Run Locally
 
