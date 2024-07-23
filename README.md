@@ -30,13 +30,13 @@ This repository hosts the source code for SHOPNEST, smart ecommerce website buil
 
 ![Login](https://ibb.co/DKtjv2d)
 
-![Home](https://ibb.co/5vnwLJg)
+![Home](https://i.ibb.co/RPBdcJk/shopnest-home.png)
 
-![Products](https://ibb.co/wQ9qPFg)
+![Products](https://i.ibb.co/FYS1yL3/shopnest.png)
 
-![Contact](https://ibb.co/xs1B5wp)
+![Contact](https://i.ibb.co/4f8XNC6/shopnest-contact.png)
 
-![Checkout](https://ibb.co/DzbB57Q)
+![Checkout](https://i.ibb.co/4KfbPjp/shopnest-checkout.png)
 
 ![Orders](https://i.ibb.co/mHdFWX2/shopnest-orders.png)
 
