@@ -14,43 +14,50 @@ exports.createProduct = async (req, res) => {
 };
 
 exports.fetchAllProducts = async (req, res) => {
-  let condition = {};
-  let query = Product.find(condition);
-  let totalProductsQuery = Product.find(condition);
-
-  if (req.query.category) {
-    query = query.find({ category: { $in: req.query.category.split(",") } });
-    totalProductsQuery = totalProductsQuery.find({
-      category: { $in: req.query.category.split(",") },
-    });
-  }
-  if (req.query.brand) {
-    query = query.find({ brand: { $in: req.query.brand.split(",") } });
-    totalProductsQuery = totalProductsQuery.find({
-      brand: { $in: req.query.brand.split(",") },
-    });
-  }
-  if (req.query._sort && req.query._order) {
-    query = query.sort({ [req.query._sort]: req.query._order });
-  }
-
-  const totalDocs = await totalProductsQuery.count().exec();
-  if (req.query._page && req.query._limit) {
-    const pageSize = req.query._limit;
-    const page = req.query._page;
-    query = query.skip(pageSize * (page - 1)).limit(pageSize);
-  }
-
-  //To do Search Using Voice
-
   try {
-    const doc = await query.exec();
+    let condition = {};
+    let query = Product.find(condition);
+    let totalProductsQuery = Product.find(condition);
+
+    // Apply category filter if provided
+    if (req.query.category) {
+      const categories = req.query.category.split(",");
+      query = query.find({ category: { $in: categories } });
+      totalProductsQuery = totalProductsQuery.find({ category: { $in: categories } });
+    }
+
+    // Apply brand filter if provided
+    if (req.query.brand) {
+      const brands = req.query.brand.split(",");
+      query = query.find({ brand: { $in: brands } });
+      totalProductsQuery = totalProductsQuery.find({ brand: { $in: brands } });
+    }
+
+    // Apply sorting if provided
+    if (req.query._sort && req.query._order) {
+      query = query.sort({ [req.query._sort]: req.query._order });
+    }
+
+    // Count total documents matching the query
+    const totalDocs = await totalProductsQuery.countDocuments().exec();
+
+    // Apply pagination if provided
+    if (req.query._page && req.query._limit) {
+      const pageSize = parseInt(req.query._limit, 10);
+      const page = parseInt(req.query._page, 10);
+      query = query.skip(pageSize * (page - 1)).limit(pageSize);
+    }
+
+    // Execute the query and return results
+    const docs = await query.exec();
     res.set("X-Total-Count", totalDocs);
-    res.status(200).json(doc);
+    res.status(200).json(docs);
+
   } catch (err) {
-    res.status(200).json(err);
+    res.status(500).json({ message: 'An error occurred', error: err });
   }
 };
+
 
 exports.fetchProductById = async (req, res) => {
   const { id } = req.params;
