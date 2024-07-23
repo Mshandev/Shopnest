@@ -1,6 +1,6 @@
 # SHOPNEST - Ecommerce Website
 
-This repository hosts the source code for SHOPNEST, smart ecommerce website built with the MERN Stack. It features a user-friendly shopping platform for fancy ladies' shoes.
+This repository hosts the source code for SHOPNEST, smart ecommerce website built with the MERN Stack. It features a user-friendly shopping platform for fancy ladies' shoes..
 
 ## Demo
 
