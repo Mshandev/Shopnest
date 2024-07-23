@@ -34,22 +34,22 @@ This repository hosts the source code for SHOPNEST, smart ecommerce website buil
 
 Clone the project
 
-bash
+```bash
     git clone https://github.com/Mshandev/Shopnest
-
+```
 Go to the project directory
 
-bash
+```bash
     cd SHOPNEST
-
+```
 Install dependencies
 
-bash
+```bash
     npm install
-
+```
 Setup Environment Vaiables
 
-Make .env file and store environment Variables
+```Make .env file and store environment Variables
   PORT=8080
   MONGODB_URL
   ENDPOINT_SECRET
@@ -58,12 +58,12 @@ Make .env file and store environment Variables
   SESSION_KEY
   DB_PASSWORD
   MAIL_PASSWORD
-  
+ ``` 
 Start the server
 
-bash
+```bash
     npm start
-
+```
 ## Tech Stack
 * [React](https://reactjs.org/)
 * [Redux-Toolkit](https://redux-toolkit.js.org/)
